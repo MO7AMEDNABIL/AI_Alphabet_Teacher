@@ -1,0 +1,740 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Alphabet Teacher</title>
+  <style>
+    body { 
+      font-family: 'Comic Sans MS', Arial, sans-serif; 
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #74b9ff, #0984e3);
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    
+    h1 {
+      text-align: center;
+      color: #2d3436;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .section {
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 15px;
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+    }
+    
+    .child-info {
+      background: linear-gradient(135deg, #fd79a8, #fdcb6e);
+    }
+    
+    .practice-area {
+      background: linear-gradient(135deg, #00b894, #00cec9);
+      color: white;
+    }
+    
+    .practice-area h3 {
+      color: white;
+      margin-top: 0;
+    }
+    
+    .camera-section {
+      background: linear-gradient(135deg, #e84393, #fd79a8);
+      color: white;
+    }
+    
+    .camera-section h3 {
+      color: white;
+      margin-top: 0;
+    }
+    
+    .memory-panel {
+      background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+      color: white;
+    }
+    
+    .memory-panel h3 {
+      color: white;
+      margin-top: 0;
+    }
+    
+    .btn {
+      padding: 12px 20px;
+      margin: 8px;
+      cursor: pointer;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #00b894, #00cec9);
+      color: white;
+    }
+    
+    .btn-record {
+      background: linear-gradient(135deg, #e17055, #d63031);
+      color: white;
+      font-size: 18px;
+      padding: 15px 25px;
+    }
+    
+    .btn-camera {
+      background: linear-gradient(135deg, #e84393, #fd79a8);
+      color: white;
+      font-size: 18px;
+      padding: 15px 25px;
+    }
+    
+    .btn-teach {
+      background: linear-gradient(135deg, #fdcb6e, #e17055);
+      color: white;
+    }
+    
+    .btn-settings {
+      background: linear-gradient(135deg, #00a3de, #2d3436);
+      color: white;
+    }
+    
+    input, select {
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid #ddd;
+      font-size: 16px;
+      margin: 5px;
+    }
+    
+    input:focus, select:focus {
+      border-color: #74b9ff;
+      outline: none;
+    }
+    
+    #transcript {
+      border: 2px solid #ddd;
+      border-radius: 15px;
+      padding: 15px;
+      min-height: 60px;
+      margin-top: 10px;
+      background: white;
+      font-size: 18px;
+      line-height: 1.4;
+      color: rgba(102, 92, 92, 0.577);
+    }
+    
+    .transcript-listening {
+      background: linear-gradient(135deg, #74b9ff, #0984e3);
+      color: white;
+      border-color: #74b9ff;
+    }
+    
+    .transcript-processing {
+      background: linear-gradient(135deg, #fdcb6e, #e17055);
+      color: white;
+      border-color: #fdcb6e;
+    }
+    
+    #camera-results {
+      border: 2px solid #e84393;
+      border-radius: 15px;
+      padding: 15px;
+      min-height: 60px;
+      margin-top: 10px;
+      background: rgba(255,255,255,0.9);
+      font-size: 18px;
+      line-height: 1.4;
+    }
+    
+    .camera-detecting {
+      background: linear-gradient(135deg, #e84393, #fd79a8);
+      color: white;
+      border-color: #e84393;
+    }
+    
+    #feedback.success {
+      color: #00b894;
+      font-weight: bold;
+      font-size: 18px;
+      background: #d1f2eb;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    
+    #feedback.error {
+      color: #d63031;
+      font-weight: bold;
+      font-size: 18px;
+      background: #fadbd8;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    
+    #stars {
+      margin-top: 15px;
+      font-size: 24px;
+      text-align: center;
+      padding: 15px;
+      background: linear-gradient(135deg, #fdcb6e, #e17055);
+      border-radius: 15px;
+      color: white;
+    }
+    
+    #memory {
+      border: 2px dashed #a29bfe;
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 15px;
+      background: rgba(255,255,255,0.2);
+      font-family: monospace;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    
+    .state-panel {
+      background: rgba(255,255,255,0.2);
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    
+    .activity-suggestion {
+      background: linear-gradient(135deg, #fd79a8, #fdcb6e);
+      color: white;
+      padding: 15px;
+      border-radius: 15px;
+      margin: 10px 0;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .detection-status {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .detection-status.waiting {
+      background: #e3f2fd;
+      color: #1976d2;
+    }
+
+    .detection-status.detecting {
+      background: #fff3e0;
+      color: #f57c00;
+    }
+
+    .detection-status.success {
+      background: #e8f5e8;
+      color: #2e7d32;
+    }
+
+    .detection-status.error {
+      background: #ffebee;
+      color: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎓 Alphabet Teacher</h1>
+
+    <div class="section child-info">
+      <h3>👋 Welcome!</h3>
+      <label>What's your name? 
+        <input id="child_name" placeholder="Enter your name (optional)" />
+      </label>
+      <button id="set_name" class="btn btn-primary">Save Name</button>
+      <div id="welcome_message"></div>
+    </div>
+
+    <div class="section camera-section">
+      <h3>📸 Camera Letter Detection</h3>
+      <div style="text-align: center;">
+        <button id="detect_letter" class="btn btn-camera">📸 Show Me a Letter!</button>
+        <div style="margin-top: 10px; font-size: 14px; color: rgba(255,255,255,0.8);">
+          Click to open camera and detect letters (A-Z)
+        </div>
+      </div>
+      
+      <div id="camera-results">Click "Show Me a Letter!" to start camera detection</div>
+      <div id="detection-status" class="detection-status waiting">📱 Camera Ready - Click button to start detection</div>
+    </div>
+
+    <div class="section practice-area">
+      <h3>📚 Letter Practice</h3>
+      
+      <div>
+        <label>Choose letter to learn:
+          <select id="letter">
+            <option value="">-- Select a Letter --</option>
+            <option value="A">A - Apple</option>
+            <option value="B">B - Ball</option>
+            <option value="C">C - Cat</option>
+            <option value="D">D - Dog</option>
+            <option value="E">E - Elephant</option>
+            <option value="F">F - Fish</option>
+            <option value="G">G - Goat</option>
+            <option value="H">H - Hat</option>
+            <option value="I">I - Ice</option>
+            <option value="J">J - Juice</option>
+            <option value="K">K - Kite</option>
+            <option value="L">L - Lion</option>
+            <option value="M">M - Mouse</option>
+            <option value="N">N - Nose</option>
+            <option value="O">O - Orange</option>
+            <option value="P">P - Pig</option>
+            <option value="Q">Q - Queen</option>
+            <option value="R">R - Rabbit</option>
+            <option value="S">S - Sun</option>
+            <option value="T">T - Tree</option>
+            <option value="U">U - Umbrella</option>
+            <option value="V">V - Van</option>
+            <option value="W">W - Water</option>
+            <option value="X">X - X-ray</option>
+            <option value="Y">Y - Yellow</option>
+            <option value="Z">Z - Zebra</option>
+          </select>
+        </label>
+        <button id="teach_letter" class="btn btn-teach">🎯 Teach Me This Letter!</button>
+        <button id="next_suggestion" class="btn btn-primary">💡 What Should I Learn Next?</button>
+      </div>
+
+      <div id="activity_suggestion" class="activity-suggestion" style="display:none;">
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>🎤 Voice Practice</h3>
+      <div style="text-align: center;">
+        <button id="record" class="btn btn-record">🎤 Press to Practice Speaking!</button>
+        <div style="margin-top: 10px; font-size: 14px; color: #636e72;">
+          Hold for 3 seconds, then release
+        </div>
+      </div>
+      
+      <div id="transcript">For Example: Say "teach me A" or choose a letter to start</div>
+      <div id="feedback"></div>
+    </div>
+
+    <div id="stars">⭐ Progress: <span id="star_count">0</span> stars earned!</div>
+
+    <div class="section memory-panel">
+      <h3>🧠 Memory (Last 3 Conversations)</h3>
+      <div id="memory">No conversation yet - start by saying hello!</div>
+      
+      <div class="state-panel">
+        <strong>Current State:</strong>
+        <div id="session_state">Not started yet</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>⚙️ Settings</h3>
+      <button id="settings_btn" class="btn btn-settings">🔒 Advanced Settings (Parents Only)</button>
+      <button id="reset_session" class="btn btn-settings">🔄 Reset Progress</button>
+    </div>
+  </div>
+
+  <script>
+    const base = "https://12067eb79427.ngrok-free.app";
+    const session_id = "sess_" + Math.random().toString(36).slice(2,9);
+    
+    let currentState = {};
+    let currentProgress = { stars: 0, completed_letters: [] };
+    let isRecording = false;
+    let isDetecting = false;
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      updateProgressDisplay();
+    });
+
+    // Camera Detection
+    document.getElementById('detect_letter').onclick = async () => {
+      if (isDetecting) return;
+      
+      try {
+        isDetecting = true;
+        document.getElementById('detect_letter').disabled = true;
+        document.getElementById('detect_letter').innerText = '📸 Detecting...';
+        
+        updateDetectionStatus('detecting', '🔍 Opening camera and looking for letters...');
+        document.getElementById('camera-results').className = 'camera-detecting';
+        document.getElementById('camera-results').innerText = '📸 Camera is opening and scanning for letters...';
+        
+        console.log('Starting letter detection...');
+        
+        const response = await fetch(`http://127.0.0.1:5001/detect`);
+        
+        if (!response.ok) {
+          throw new Error(`Server responded with status ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Detection result:', data);
+        
+        document.getElementById('camera-results').className = '';
+        document.getElementById('camera-results').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        
+        if (data.detected_letter) {
+          updateDetectionStatus('success', `✅ Found letter: ${data.detected_letter}`);
+          
+          const letterSelect = document.getElementById('letter');
+          letterSelect.value = data.detected_letter.toUpperCase();
+          letterSelect.dispatchEvent(new Event('change'));
+          
+          updateProgressDisplay();
+          
+        } else if (data.error) {
+          updateDetectionStatus('error', `❌ Error: ${data.error}`);
+        } else {
+          updateDetectionStatus('error', '❌ No letter detected - try again');
+        }
+        
+      } catch (error) {
+        console.error('Camera detection error:', error);
+        updateDetectionStatus('error', `❌ Detection failed: ${error.message}`);
+        document.getElementById('camera-results').className = '';
+        document.getElementById('camera-results').innerHTML = 
+          '<p style="color:red;">Error: ' + error.message + '</p>' +
+          '<p>Make sure the YOLO server is running on http://127.0.0.1:5001</p>';
+      } finally {
+        isDetecting = false;
+        document.getElementById('detect_letter').disabled = false;
+        document.getElementById('detect_letter').innerText = '📸 Show Me a Letter!';
+        
+        setTimeout(() => {
+          updateDetectionStatus('waiting', '📱 Camera Ready - Click button to start detection');
+        }, 3000);
+      }
+    };
+
+    function updateDetectionStatus(type, message) {
+      const statusEl = document.getElementById('detection-status');
+      statusEl.className = `detection-status ${type}`;
+      statusEl.innerText = message;
+    }
+
+    // Name setting
+    document.getElementById('set_name').onclick = async () => {
+      const name = document.getElementById('child_name').value.trim();
+      if (!name) {
+        alert('Please enter a name first!');
+        return;
+      }
+      
+      await simulateVoiceInput(`My name is ${name}`);
+    };
+
+    // Letter teaching
+    document.getElementById('teach_letter').onclick = async () => {
+      const letter = document.getElementById('letter').value;
+      if (!letter) {
+        alert('Please select a letter first!');
+        return;
+      }
+      
+      await simulateVoiceInput(`teach me ${letter}`);
+    };
+
+    // Next suggestion
+    document.getElementById('next_suggestion').onclick = async () => {
+      await simulateVoiceInput('what next');
+    };
+
+    // Voice recorder
+    document.getElementById('record').onmousedown = startRecording;
+    document.getElementById('record').onmouseup = stopRecording;
+    document.getElementById('record').onmouseleave = stopRecording;
+
+    let mediaRecorder = null;
+    let recordingChunks = [];
+
+    async function startRecording() {
+      if (isRecording) return;
+      
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            sampleRate: 16000,
+            channelCount: 1,
+            echoCancellation: true,
+            noiseSuppression: true
+          }
+        });
+        
+        const supportedTypes = ['audio/wav', 'audio/mp4', 'audio/mpeg', 'audio/webm;codecs=opus', 'audio/webm'];
+        let selectedType = 'audio/webm';
+        for (const type of supportedTypes) {
+          if (MediaRecorder.isTypeSupported(type)) {
+            selectedType = type;
+            break;
+          }
+        }
+        
+        mediaRecorder = new MediaRecorder(stream, { mimeType: selectedType });
+        recordingChunks = [];
+        
+        mediaRecorder.ondataavailable = e => {
+          if (e.data.size > 0) {
+            recordingChunks.push(e.data);
+          }
+        };
+        mediaRecorder.onstop = processRecording;
+        
+        mediaRecorder.start(100);
+        isRecording = true;
+        
+        document.getElementById('transcript').className = 'transcript-listening';
+        document.getElementById('transcript').innerText = '🎤 Listening... (hold button and speak)';
+        
+      } catch (e) {
+        console.error('MediaRecorder error:', e);
+        alert("Microphone not available: " + e.message);
+      }
+    }
+
+    function stopRecording() {
+      if (!isRecording || !mediaRecorder) return;
+      
+      mediaRecorder.stop();
+      isRecording = false;
+      
+      if (mediaRecorder.stream) {
+        mediaRecorder.stream.getTracks().forEach(track => track.stop());
+      }
+      
+      document.getElementById('transcript').className = 'transcript-processing';
+      document.getElementById('transcript').innerText = '⏳ Processing your speech...';
+    }
+
+    async function processRecording() {
+      try {
+        if (recordingChunks.length === 0) {
+          throw new Error('No audio data recorded');
+        }
+        
+        const blob = new Blob(recordingChunks, {type: mediaRecorder.mimeType});
+        
+        if (blob.size < 1000) {
+          throw new Error('Recording too short or empty');
+        }
+        
+        const form = new FormData();
+        const audioBuffer = await blob.arrayBuffer();
+        const wavBlob = new Blob([audioBuffer], {type: 'audio/wav'});
+        
+        form.append("audio", wavBlob, "speech.wav");
+        form.append("session_id", session_id);
+        form.append("expected_letter", document.getElementById('letter').value || '');
+
+        const response = await fetch(base + "/asr", {
+          method: "POST", 
+          body: form
+        });
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Server error: ${response.status} - ${errorText}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.error) {
+          throw new Error(data.error);
+        }
+        
+        displayResponse(data);
+        
+      } catch (error) {
+        console.error('Error processing recording:', error);
+        
+        document.getElementById('transcript').innerText = `Recording failed: ${error.message}. Please try again.`;
+        document.getElementById('transcript').className = '';
+        
+        const feedbackEl = document.getElementById('feedback');
+        feedbackEl.className = 'error';
+        feedbackEl.innerText = '🎤 Try holding the button longer and speaking clearly. Make sure your microphone is working.';
+        
+        setTimeout(() => {
+          if (confirm('Voice recording failed. Would you like to type your response instead?')) {
+            const textInput = prompt('Type what you wanted to say:');
+            if (textInput && textInput.trim()) {
+              simulateVoiceInput(textInput.trim());
+            }
+          }
+        }, 2000);
+      }
+    }
+
+    async function simulateVoiceInput(text) {
+      try {
+        document.getElementById('transcript').className = 'transcript-processing';
+        document.getElementById('transcript').innerText = `Processing: "${text}"`;
+        
+        const response = await fetch(base + "/text_input", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            text: text,
+            session_id: session_id,
+            expected_letter: document.getElementById('letter').value || ''
+          })
+        });
+        
+        const data = await response.json();
+        displayResponse(data);
+        
+      } catch (error) {
+        console.log('Using fallback simulation for:', text);
+        simulateResponse(text);
+      }
+    }
+
+    function simulateResponse(text) {
+      const mockResponse = {
+        transcript: text,
+        assistant_text: `I heard "${text}". This is a demo response.`,
+        feedback: { ok: Math.random() > 0.5 },
+        memory: [],
+        state: { child_name: document.getElementById('child_name').value },
+        progress: { stars: currentProgress.stars, completed_letters: currentProgress.completed_letters }
+      };
+      
+      displayResponse(mockResponse);
+    }
+
+    async function displayResponse(data) {
+      document.getElementById('transcript').className = '';
+      document.getElementById('transcript').innerText = data.transcript || "(no transcript)";
+
+      const feedbackEl = document.getElementById('feedback');
+      if (data.feedback && data.feedback.ok) {
+        feedbackEl.className = "success";
+        feedbackEl.innerText = "✅ " + (data.assistant_text || "Great job!");
+        currentProgress.stars++;
+        if (data.state && data.state.current_letter) {
+          if (!currentProgress.completed_letters.includes(data.state.current_letter)) {
+            currentProgress.completed_letters.push(data.state.current_letter);
+          }
+        }
+      } else {
+        feedbackEl.className = "error";
+        feedbackEl.innerText = "🤔 " + (data.assistant_text || "Let's try that again!");
+      }
+
+      if (data.progress) {
+        currentProgress = data.progress;
+      }
+      
+      updateProgressDisplay();
+
+      if (data.memory && data.memory.length > 0) {
+        document.getElementById("memory").innerHTML = data.memory
+          .map(m => `<div style="margin-bottom:10px;"><strong>👧 You:</strong> ${m.user}<br><strong>🤖 Teacher:</strong> ${m.assistant}</div>`)
+          .join("<hr style='border:1px dashed rgba(255,255,255,0.3); margin:10px 0;'>");
+      }
+
+      if (data.state) {
+        currentState = data.state;
+        const stateText = Object.entries(data.state)
+          .filter(([key, value]) => value)
+          .map(([key, value]) => `${key}: ${value}`)
+          .join(', ') || 'No active state';
+        document.getElementById("session_state").innerText = stateText;
+      }
+
+      if (data.assistant_text && data.assistant_text.includes('find something')) {
+        document.getElementById('activity_suggestion').style.display = 'block';
+        document.getElementById('activity_suggestion').innerText = '🔍 Activity: ' + data.assistant_text;
+      } else {
+        document.getElementById('activity_suggestion').style.display = 'none';
+      }
+
+      if (data.assistant_text) {
+        await playTTS(data.assistant_text);
+      }
+
+      if (data.state && data.state.child_name) {
+        document.getElementById('welcome_message').innerText = `Hello, ${data.state.child_name}! 👋`;
+        document.getElementById('child_name').value = data.state.child_name;
+      }
+    }
+
+    async function playTTS(text) {
+      try {
+        const response = await fetch(base + "/tts", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            text: text,
+            session_id: session_id,
+            speed: 0.9
+          })
+        });
+        
+        if (response.ok) {
+          const audioBlob = await response.blob();
+          const audio = new Audio(URL.createObjectURL(audioBlob));
+          audio.play().catch(e => console.log('Audio play failed:', e));
+        }
+      } catch (error) {
+        console.log('TTS failed:', error);
+      }
+    }
+
+    function updateProgressDisplay() {
+      document.getElementById("star_count").innerText = currentProgress.stars;
+    }
+
+    // Reset session
+    document.getElementById('reset_session').onclick = () => {
+      if (confirm('Reset all progress? This will clear your stars and completed letters.')) {
+        currentProgress = { stars: 0, completed_letters: [] };
+        currentState = {};
+        updateProgressDisplay();
+        document.getElementById('memory').innerText = 'Session reset - start by saying hello!';
+        document.getElementById('session_state').innerText = 'Reset complete';
+        document.getElementById('welcome_message').innerText = '';
+        document.getElementById('child_name').value = '';
+      }
+    };
+
+    // Settings button
+    document.getElementById('settings_btn').onclick = () => {
+      alert('🔒 Advanced settings would go here (parent controls, difficulty levels, etc.)');
+    };
+  </script>
+</body>
+</html>
